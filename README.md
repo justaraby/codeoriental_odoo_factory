@@ -1,6 +1,6 @@
 # Smart Factory Operating System (OS) | نظام المصنع الذكي المتكامل لأودو
 > **Turnkey Factory ERP for Odoo 17, 18, 19 & 20 — Zero Consultant Needed**  
-> **Price: €65.00** | **License: OPL-1** | **Author: CodeOriental**
+> **Price: €65.00** | **License: OPL-1** | **Author: Muhammed Ezzat Hosni Hussen**
 
 ---
 
@@ -164,6 +164,6 @@ git push -u origin main
 
 ## 📞 الدعم الفني والتواصل | Support
 
-- **الجهة المطورة**: CodeOriental
-- **الموقع الإلكتروني**: [https://codeoriental.com](https://codeoriental.com)
+- **الجهة المطورة**: Muhammed Ezzat Hosni Hussen
+- **الموقع الإلكتروني**: [https://apps.odoo.com/apps/modules/browse?author=Muhammed%20Ezzat%20Hosni%20Hussen](https://apps.odoo.com/apps/modules/browse?author=Muhammed%20Ezzat%20Hosni%20Hussen)
 - **البريد الإلكتروني**: support@codeoriental.com
