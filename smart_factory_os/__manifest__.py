@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of CodeOriental Smart Factory OS. See LICENSE file for full copyright and licensing details.
+# Part of Smart Factory OS by Muhammed Ezzat Hosni Hussen. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Smart Factory Operating System | Turnkey Factory ERP & Shopfloor Hub',
@@ -27,8 +27,8 @@ Compatibility:
 * Odoo Community & Odoo Enterprise
 * Odoo.sh & On-Premise deployments
     """,
-    'author': 'CodeOriental',
-    'website': 'https://codeoriental.com',
+    'author': 'Muhammed Ezzat Hosni Hussen',
+    'website': 'https://apps.odoo.com/apps/modules/browse?author=Muhammed%20Ezzat%20Hosni%20Hussen',
     'license': 'OPL-1',
     'price': 65.00,
     'currency': 'EUR',
