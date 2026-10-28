@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Industry Template Kanban View -->
+        <record id="view_factory_industry_template_kanban" model="ir.ui.view">
+            <field name="name">factory.industry.template.kanban</field>
+            <field name="model">factory.industry.template</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_dashboard">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="icon"/>
+                    <field name="description"/>
+                    <field name="default_overhead_rate"/>
+                    <field name="workcenter_count"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click p-3 rounded shadow-sm border">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="me-2 text-primary" style="font-size: 1.5rem;">
+                                        <i t-attf-class="fa #{record.icon.raw_value}"/>
+                                    </div>
+                                    <strong class="fs-6 text-dark"><field name="name"/></strong>
+                                </div>
+                                <p class="text-muted small mb-2"><field name="description"/></p>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top small">
+                                    <span><strong><field name="workcenter_count"/></strong> Standard Lines</span>
+                                    <span>Overhead: <strong><field name="default_overhead_rate"/>%</strong></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Industry Template Form View -->
+        <record id="view_factory_industry_template_form" model="ir.ui.view">
+            <field name="name">factory.industry.template.form</field>
+            <field name="model">factory.industry.template</field>
+            <field name="arch" type="xml">
+                <form string="Industry Factory Profile">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Industry Name"/>
+                            <h1><field name="name" placeholder="e.g. Food &amp; Bakery Manufacturing"/></h1>
+                        </div>
+                        <group>
+                            <group string="Profile Settings">
+                                <field name="code"/>
+                                <field name="icon"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group string="Operational Defaults">
+                                <field name="default_overhead_rate"/>
+                                <field name="default_scrap_tolerance"/>
+                                <field name="shift_system"/>
+                            </group>
+                        </group>
+                        <group string="Industry Scope &amp; Summary">
+                            <field name="description" placeholder="Short description of typical machinery, processes and outputs..."/>
+                        </group>
+                        <notebook>
+                            <page string="Pre-configured Work Centers &amp; Lines" name="preset_lines">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                        <field name="hourly_cost" widget="monetary"/>
+                                        <field name="capacity"/>
+                                        <field name="time_efficiency"/>
+                                        <field name="requires_maintenance" widget="boolean_toggle"/>
+                                        <field name="default_notes"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Industry Template Tree View -->
+        <record id="view_factory_industry_template_tree" model="ir.ui.view">
+            <field name="name">factory.industry.template.tree</field>
+            <field name="model">factory.industry.template</field>
+            <field name="arch" type="xml">
+                <tree string="Industry Profiles">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="workcenter_count"/>
+                    <field name="default_overhead_rate"/>
+                    <field name="default_scrap_tolerance"/>
+                    <field name="shift_system"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_factory_industry_template" model="ir.actions.act_window">
+            <field name="name">Industry Factory Profiles</field>
+            <field name="res_model">factory.industry.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+    </data>
+</odoo>

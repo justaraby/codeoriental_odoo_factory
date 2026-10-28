@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 1. Food & Beverage / Bakery -->
+        <record id="template_industry_food" model="factory.industry.template">
+            <field name="name">Food, Beverage &amp; Bakery</field>
+            <field name="code">FOOD</field>
+            <field name="sequence">1</field>
+            <field name="icon">fa-cutlery</field>
+            <field name="description">Sanitary batch processing, ingredient mixing, ovens/cookers, sterile filling, and packaging.</field>
+            <field name="default_overhead_rate">14.0</field>
+            <field name="default_scrap_tolerance">2.5</field>
+            <field name="shift_system">double</field>
+        </record>
+        <record id="line_food_mixing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_food"/>
+            <field name="name">Mixing &amp; Formulation Station</field>
+            <field name="code">MIX-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">22.0</field>
+            <field name="default_notes">Follow strict recipe scaling, allergen separation, and batch temperature checks.</field>
+        </record>
+        <record id="line_food_baking" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_food"/>
+            <field name="name">Baking / Cooking / Thermal Line</field>
+            <field name="code">OVEN-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">35.0</field>
+            <field name="default_notes">Monitor thermal cycle curve, moisture levels, and oven conveyor speed.</field>
+        </record>
+        <record id="line_food_packaging" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_food"/>
+            <field name="name">Filling, Sealing &amp; Packaging Line</field>
+            <field name="code">PACK-01</field>
+            <field name="sequence">30</field>
+            <field name="hourly_cost">28.0</field>
+            <field name="default_notes">Check net weight tolerance, date coding, and hermetic seal integrity.</field>
+        </record>
+
+        <!-- 2. Plastics & Injection Molding -->
+        <record id="template_industry_plastic" model="factory.industry.template">
+            <field name="name">Plastics, Blow &amp; Injection Molding</field>
+            <field name="code">PLASTIC</field>
+            <field name="sequence">2</field>
+            <field name="icon">fa-cubes</field>
+            <field name="description">Polymer resin compounding, mold clamping, hydraulic injection, cooling cycles, regrind recycling.</field>
+            <field name="default_overhead_rate">18.0</field>
+            <field name="default_scrap_tolerance">3.5</field>
+            <field name="shift_system">triple</field>
+        </record>
+        <record id="line_plastic_injection" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_plastic"/>
+            <field name="name">Injection Molding Machine Line</field>
+            <field name="code">INJ-MOLD-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">45.0</field>
+            <field name="default_notes">Ensure mold temperature control, barrel heating zone calibration, and cycle time adherence.</field>
+        </record>
+        <record id="line_plastic_trimming" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_plastic"/>
+            <field name="name">De-gating, Trimming &amp; Assembly</field>
+            <field name="code">TRIM-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">20.0</field>
+            <field name="default_notes">Runner separation, flash removal, and runner regrind bin collection.</field>
+        </record>
+        <record id="line_plastic_boxing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_plastic"/>
+            <field name="name">Bulk Boxing &amp; Palletizing</field>
+            <field name="code">BOX-01</field>
+            <field name="sequence">30</field>
+            <field name="hourly_cost">18.0</field>
+            <field name="default_notes">Carton labeling, barcode validation, pallet stretch wrapping.</field>
+        </record>
+
+        <!-- 3. Metal Fabrication & Machining -->
+        <record id="template_industry_metal" model="factory.industry.template">
+            <field name="name">Metal Fabrication, CNC &amp; Machining</field>
+            <field name="code">METAL</field>
+            <field name="sequence">3</field>
+            <field name="icon">fa-wrench</field>
+            <field name="description">Sheet metal shearing, CNC milling/turning, TIG/MIG welding, surface powder coating, precision deburring.</field>
+            <field name="default_overhead_rate">20.0</field>
+            <field name="default_scrap_tolerance">2.0</field>
+            <field name="shift_system">double</field>
+        </record>
+        <record id="line_metal_cutting" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_metal"/>
+            <field name="name">Laser Cutting &amp; CNC Punching</field>
+            <field name="code">LASER-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">55.0</field>
+            <field name="default_notes">Gas pressure calibration (N2/O2), sheet nesting optimization, lens focus inspection.</field>
+        </record>
+        <record id="line_metal_bending" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_metal"/>
+            <field name="name">CNC Press Brake &amp; Bending</field>
+            <field name="code">BRAKE-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">38.0</field>
+            <field name="default_notes">Tooling alignment, bend angle tolerance ±0.5°, springback compensation.</field>
+        </record>
+        <record id="line_metal_welding" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_metal"/>
+            <field name="name">Welding &amp; Grinding Booth</field>
+            <field name="code">WELD-01</field>
+            <field name="sequence">30</field>
+            <field name="hourly_cost">32.0</field>
+            <field name="default_notes">Weld penetration inspection, spatter cleanup, protective anti-rust priming.</field>
+        </record>
+
+        <!-- 4. Textile & Garments -->
+        <record id="template_industry_textile" model="factory.industry.template">
+            <field name="name">Textile, Apparel &amp; Garments</field>
+            <field name="code">TEXTILE</field>
+            <field name="sequence">4</field>
+            <field name="icon">fa-tags</field>
+            <field name="description">Fabric spreading, marker cutting, sewing line assembly, button holing, iron pressing, folding and packing.</field>
+            <field name="default_overhead_rate">12.0</field>
+            <field name="default_scrap_tolerance">4.0</field>
+            <field name="shift_system">single</field>
+        </record>
+        <record id="line_textile_cutting" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_textile"/>
+            <field name="name">Spreading &amp; Precision Cutting Line</field>
+            <field name="code">CUT-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">24.0</field>
+            <field name="default_notes">Grain alignment, lay height limit, bundle numbering and tagging.</field>
+        </record>
+        <record id="line_textile_sewing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_textile"/>
+            <field name="name">Modular Sewing Assembly Line</field>
+            <field name="code">SEW-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">28.0</field>
+            <field name="default_notes">Line balancing, stitch tension consistency, seam allowance inspection.</field>
+        </record>
+        <record id="line_textile_finishing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_textile"/>
+            <field name="name">Steam Pressing &amp; Quality Inspection</field>
+            <field name="code">FIN-01</field>
+            <field name="sequence">30</field>
+            <field name="hourly_cost">19.0</field>
+            <field name="default_notes">Thread trimming, dimensional measurement check, polybag packaging.</field>
+        </record>
+
+        <!-- 5. Chemical & Detergents -->
+        <record id="template_industry_chemical" model="factory.industry.template">
+            <field name="name">Chemicals, Detergents &amp; Cosmetics</field>
+            <field name="code">CHEMICAL</field>
+            <field name="sequence">5</field>
+            <field name="icon">fa-flask</field>
+            <field name="description">Liquid compounding, batch reactors, emulsification, pH titration testing, automatic filling lines.</field>
+            <field name="default_overhead_rate">16.0</field>
+            <field name="default_scrap_tolerance">1.5</field>
+            <field name="shift_system">double</field>
+        </record>
+        <record id="line_chem_reactor" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_chemical"/>
+            <field name="name">Mixing Reactor &amp; Homogenizer</field>
+            <field name="code">REACT-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">42.0</field>
+            <field name="default_notes">Viscosity verification, cooling jacket control, batch titration sign-off.</field>
+        </record>
+        <record id="line_chem_bottling" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_chemical"/>
+            <field name="name">Automatic Liquid Bottling &amp; Capping</field>
+            <field name="code">BTL-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">34.0</field>
+            <field name="default_notes">Fill volume gravimetric checks, induction foil sealing, torque control.</field>
+        </record>
+
+        <!-- 6. Furniture & Woodworking -->
+        <record id="template_industry_furniture" model="factory.industry.template">
+            <field name="name">Woodworking, Cabinetry &amp; Furniture</field>
+            <field name="code">FURNITURE</field>
+            <field name="sequence">6</field>
+            <field name="icon">fa-tree</field>
+            <field name="description">Panel sizing, edge-banding, multi-axis CNC routing, joinery assembly, spray finishing.</field>
+            <field name="default_overhead_rate">15.0</field>
+            <field name="default_scrap_tolerance">3.0</field>
+            <field name="shift_system">single</field>
+        </record>
+        <record id="line_furn_sizing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_furniture"/>
+            <field name="name">Beam Saw &amp; CNC Routing Station</field>
+            <field name="code">SAW-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">36.0</field>
+            <field name="default_notes">Optimization yield monitoring, squareness inspection, suction cup alignment.</field>
+        </record>
+        <record id="line_furn_edgeband" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_furniture"/>
+            <field name="name">Heavy Duty Edge-Banding Line</field>
+            <field name="code">EDGE-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">30.0</field>
+            <field name="default_notes">Glue pot temperature 190°C, scraper calibration, buffing wheel inspection.</field>
+        </record>
+        <record id="line_furn_assembly" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_furniture"/>
+            <field name="name">Hardware Insertion &amp; Case Clamp Assembly</field>
+            <field name="code">ASSY-01</field>
+            <field name="sequence">30</field>
+            <field name="hourly_cost">22.0</field>
+            <field name="default_notes">Dowel glue injection, diagonal square check, protective corner fitting.</field>
+        </record>
+
+        <!-- 7. Assembly & Electronics -->
+        <record id="template_industry_electronics" model="factory.industry.template">
+            <field name="name">Electronics, Hardware &amp; Assembly</field>
+            <field name="code">ELECTRONICS</field>
+            <field name="sequence">7</field>
+            <field name="icon">fa-microchip</field>
+            <field name="description">PCB through-hole assembly, wire harness prep, mechanical casing, burn-in testing, firmware flashing.</field>
+            <field name="default_overhead_rate">15.0</field>
+            <field name="default_scrap_tolerance">1.0</field>
+            <field name="shift_system">double</field>
+        </record>
+        <record id="line_elec_assembly" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_electronics"/>
+            <field name="name">ESD Manual &amp; Semi-Auto Assembly Bench</field>
+            <field name="code">ESD-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">26.0</field>
+            <field name="default_notes">ESD wrist strap grounding verification, torque screwdriver calibration.</field>
+        </record>
+        <record id="line_elec_testing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_electronics"/>
+            <field name="name">Automated Functional Test &amp; Burn-in</field>
+            <field name="code">TEST-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">38.0</field>
+            <field name="default_notes">Firmware flash checksum verify, voltage/current draw logging, pass/fail barcode print.</field>
+        </record>
+
+        <!-- 8. General Workshop & Custom Fabrication -->
+        <record id="template_industry_general" model="factory.industry.template">
+            <field name="name">General Manufacturing &amp; Job Shop</field>
+            <field name="code">GENERAL</field>
+            <field name="sequence">8</field>
+            <field name="icon">fa-cogs</field>
+            <field name="description">Multi-purpose machine shop, custom fabrication, repairs, prototype and on-demand batches.</field>
+            <field name="default_overhead_rate">15.0</field>
+            <field name="default_scrap_tolerance">2.5</field>
+            <field name="shift_system">single</field>
+        </record>
+        <record id="line_gen_fabrication" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_general"/>
+            <field name="name">Main Fabrication Station</field>
+            <field name="code">FAB-01</field>
+            <field name="sequence">10</field>
+            <field name="hourly_cost">30.0</field>
+            <field name="default_notes">Verify drawing revisions, material heat number, and initial sample piece.</field>
+        </record>
+        <record id="line_gen_finishing" model="factory.industry.line">
+            <field name="template_id" ref="template_industry_general"/>
+            <field name="name">Surface Finishing &amp; Inspection Station</field>
+            <field name="code">FIN-GEN-01</field>
+            <field name="sequence">20</field>
+            <field name="hourly_cost">25.0</field>
+            <field name="default_notes">Final dimensional inspection against job traveler specs before packing.</field>
+        </record>
+    </data>
+</odoo>

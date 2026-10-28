@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Shift Schedule Form View -->
+        <record id="view_factory_shift_form" model="ir.ui.view">
+            <field name="name">factory.shift.form</field>
+            <field name="model">factory.shift</field>
+            <field name="arch" type="xml">
+                <form string="Production Shift Schedule">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Shift Name"/>
+                            <h1><field name="name" placeholder="e.g. Day Shift (Line A)"/></h1>
+                        </div>
+                        <group>
+                            <group string="Shift Timing">
+                                <field name="code"/>
+                                <field name="start_hour" widget="float_time"/>
+                                <field name="end_hour" widget="float_time"/>
+                                <field name="duration_hours"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group string="Supervision &amp; Allocation">
+                                <field name="supervisor_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="color" widget="color_picker"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Assigned Operators / Workers" name="operators">
+                                <field name="worker_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="job_title"/>
+                                        <field name="work_phone"/>
+                                        <field name="work_email"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Shift Schedule Tree View -->
+        <record id="view_factory_shift_tree" model="ir.ui.view">
+            <field name="name">factory.shift.tree</field>
+            <field name="model">factory.shift</field>
+            <field name="arch" type="xml">
+                <tree string="Factory Shifts">
+                    <field name="sequence" widget="handle"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="start_hour" widget="float_time"/>
+                    <field name="end_hour" widget="float_time"/>
+                    <field name="duration_hours"/>
+                    <field name="supervisor_id"/>
+                    <field name="worker_count"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Shift Action -->
+        <record id="action_factory_shift" model="ir.actions.act_window">
+            <field name="name">Shift Schedules</field>
+            <field name="res_model">factory.shift</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Shift Log Form View -->
+        <record id="view_factory_shift_log_form" model="ir.ui.view">
+            <field name="name">factory.shift.log.form</field>
+            <field name="model">factory.shift.log</field>
+            <field name="arch" type="xml">
+                <form string="Daily Shift Handover &amp; Output Log">
+                    <header>
+                        <button name="action_submit" string="Submit to Plant Manager" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_approve" string="Approve Shift Handover" type="object" class="btn-success" invisible="state != 'submitted'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Shift Identification">
+                                <field name="log_date"/>
+                                <field name="shift_id"/>
+                                <field name="supervisor_id"/>
+                                <field name="active_operators"/>
+                            </group>
+                            <group string="Output &amp; Scrap Velocity">
+                                <field name="planned_units"/>
+                                <field name="produced_units"/>
+                                <field name="scrap_units"/>
+                                <field name="scrap_rate" widget="progressbar"/>
+                                <field name="achievement_rate" widget="progressbar"/>
+                                <field name="downtime_minutes"/>
+                            </group>
+                        </group>
+                        <group string="Handover Observations &amp; Safety">
+                            <field name="safety_incidents"/>
+                            <field name="incident_details" invisible="not safety_incidents"/>
+                            <field name="handover_notes" placeholder="Notes for incoming shift supervisor..."/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Shift Log Tree View -->
+        <record id="view_factory_shift_log_tree" model="ir.ui.view">
+            <field name="name">factory.shift.log.tree</field>
+            <field name="model">factory.shift.log</field>
+            <field name="arch" type="xml">
+                <tree string="Daily Shift Logs" decoration-info="state == 'draft'" decoration-success="state == 'approved'">
+                    <field name="log_date"/>
+                    <field name="shift_id"/>
+                    <field name="supervisor_id"/>
+                    <field name="produced_units"/>
+                    <field name="achievement_rate" widget="badge" decoration-success="achievement_rate &gt;= 90" decoration-warning="achievement_rate &lt; 90"/>
+                    <field name="scrap_rate" widget="badge" decoration-danger="scrap_rate &gt; 3.0" decoration-success="scrap_rate &lt;= 3.0"/>
+                    <field name="downtime_minutes"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Shift Log Action -->
+        <record id="action_factory_shift_log" model="ir.actions.act_window">
+            <field name="name">Daily Shift Logs &amp; Handover</field>
+            <field name="res_model">factory.shift.log</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

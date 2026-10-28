@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Downtime Wizard Form View -->
+        <record id="view_factory_downtime_wizard_form" model="ir.ui.view">
+            <field name="name">factory.downtime.wizard.form</field>
+            <field name="model">factory.downtime.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Machine Breakdown">
+                    <sheet>
+                        <div class="mb-3 text-danger">
+                            <h4 class="fw-bold mb-1">
+                                <i class="fa fa-wrench me-1"></i> Log Machine Breakdown Incident
+                            </h4>
+                            <p class="text-muted small">
+                                Immediately flag equipment as halted. This triggers shopfloor alerts and calculates downtime loss metrics.
+                            </p>
+                        </div>
+                        <group>
+                            <group string="Equipment">
+                                <field name="machine_id" options="{'no_create': True}"/>
+                                <field name="workcenter_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Incident Classification">
+                                <field name="reason"/>
+                                <field name="start_time"/>
+                            </group>
+                        </group>
+                        <group string="Operator Notes">
+                            <field name="technician_notes" placeholder="Describe symptoms, strange noises, alarms or defective output before breakdown..."/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_confirm_breakdown" string="⚠️ Confirm Breakdown &amp; Alert" type="object" class="btn-danger"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

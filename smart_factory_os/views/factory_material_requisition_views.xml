@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Material Requisition Form View -->
+        <record id="view_factory_material_requisition_form" model="ir.ui.view">
+            <field name="name">factory.material.requisition.form</field>
+            <field name="model">factory.material.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Shop Floor Material Requisition">
+                    <header>
+                        <button name="action_submit" string="Submit to Warehouse" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_approve_issue" string="Approve &amp; Issue to Line" type="object" class="btn-success" invisible="state != 'submitted'"/>
+                        <button name="action_create_purchase_rfq" string="⚡ 1-Click Purchase Shortages" type="object" class="btn-warning" invisible="not has_shortage"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <div class="alert alert-danger py-2 mb-3" role="alert" invisible="not has_shortage">
+                            <i class="fa fa-exclamation-circle me-1"></i> <strong>Critical Raw Material Shortage Detected!</strong> Some requested components exceed current warehouse stock. Click "1-Click Purchase Shortages" to generate an RFQ immediately.
+                        </div>
+                        <group>
+                            <group string="Requisition Context">
+                                <field name="date"/>
+                                <field name="requested_by"/>
+                                <field name="production_id" options="{'no_create': True}"/>
+                                <field name="workcenter_id"/>
+                            </group>
+                            <group string="Inventory Routing">
+                                <field name="source_location_id"/>
+                                <field name="dest_location_id"/>
+                                <field name="picking_id" invisible="not picking_id"/>
+                                <field name="has_shortage" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Requested Raw Materials &amp; Components" name="material_lines">
+                                <field name="line_ids">
+                                    <tree editable="bottom" decoration-danger="is_shortage">
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="qty_available" readonly="1"/>
+                                        <field name="shortage_qty" readonly="1" decoration-danger="shortage_qty &gt; 0"/>
+                                        <field name="is_shortage" widget="boolean_toggle" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Special Instructions" name="notes">
+                                <field name="notes" placeholder="Batch destination, packaging instructions, storage precautions..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Material Requisition Tree View -->
+        <record id="view_factory_material_requisition_tree" model="ir.ui.view">
+            <field name="name">factory.material.requisition.tree</field>
+            <field name="model">factory.material.requisition</field>
+            <field name="arch" type="xml">
+                <tree string="Material Requisitions" decoration-danger="has_shortage" decoration-info="state == 'submitted'" decoration-success="state == 'approved'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="requested_by"/>
+                    <field name="production_id"/>
+                    <field name="workcenter_id"/>
+                    <field name="has_shortage" widget="badge" decoration-danger="has_shortage"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Material Requisition Action -->
+        <record id="action_factory_material_requisition" model="ir.actions.act_window">
+            <field name="name">Material Requisitions</field>
+            <field name="res_model">factory.material.requisition</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

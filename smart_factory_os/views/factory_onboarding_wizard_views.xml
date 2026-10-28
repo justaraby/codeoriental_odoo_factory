@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Factory Onboarding Wizard Form View -->
+        <record id="view_factory_onboarding_wizard_form" model="ir.ui.view">
+            <field name="name">factory.onboarding.wizard.form</field>
+            <field name="model">factory.onboarding.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Turnkey Factory Quick Setup">
+                    <sheet>
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 800; color: #0f172a;">
+                                🏭 Turnkey Factory Quick Onboarding
+                            </h2>
+                            <p class="text-muted" style="max-width: 650px; margin: 0 auto; font-size: 0.95rem;">
+                                Configure your entire manufacturing operations in under 60 seconds without needing an Odoo consultant. Select your industry below and our engine will create standard work centers, shifts, overhead absorption rates, and a test batch bill of materials.
+                            </p>
+                        </div>
+
+                        <div class="card p-3 mb-3 border-0" style="background-color: #f1f5f9; border-radius: 10px;">
+                            <group>
+                                <group string="1. Choose Your Industry Profile">
+                                    <field name="template_id" widget="selection" options="{'no_create': True}" placeholder="Select your factory industry..."/>
+                                    <field name="factory_overhead_rate"/>
+                                </group>
+                                <group string="2. Operating Schedule &amp; Shifts">
+                                    <field name="shift_count"/>
+                                    <field name="create_workcenters" widget="boolean_toggle"/>
+                                    <field name="create_shifts" widget="boolean_toggle"/>
+                                    <field name="company_id" groups="base.group_multi_company"/>
+                                </group>
+                            </group>
+                        </div>
+
+                        <div class="card p-3 border-0" style="background-color: #e0f2fe; border-radius: 10px;">
+                            <group string="3. Ready-to-Test Sample Products &amp; BOM">
+                                <field name="create_demo_products" widget="boolean_toggle"/>
+                                <field name="sample_product_name" invisible="not create_demo_products" placeholder="e.g. Artisanal Bread 500g or PET Bottle 1L"/>
+                            </group>
+                            <p class="text-muted small mb-0">
+                                <i class="fa fa-info-circle me-1"></i> When enabled, the wizard creates sample raw materials, finished product, and a pre-configured BOM with routing operations so you can launch a trial batch right away.
+                            </p>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button name="action_deploy_factory" string="⚡ Deploy My Factory Operating System" type="object" class="btn-primary btn-lg"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_factory_onboarding_wizard_menu" model="ir.actions.act_window">
+            <field name="name">Factory Setup Wizard</field>
+            <field name="res_model">factory.onboarding.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

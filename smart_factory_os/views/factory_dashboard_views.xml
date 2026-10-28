@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Plant Command Center Dashboard View -->
+        <record id="view_factory_dashboard_form" model="ir.ui.view">
+            <field name="name">factory.dashboard.form</field>
+            <field name="model">factory.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Smart Factory Command Center" create="false" edit="false" delete="false" class="o_factory_dashboard_form">
+                    <header>
+                        <button name="action_open_quick_run_wizard" string="🚀 Launch Production Batch" type="object" class="btn-primary btn-lg"/>
+                        <button name="action_open_onboarding_wizard" string="🧙‍♂️ Re-run Setup Wizard" type="object" class="btn-secondary"/>
+                        <button name="action_open_shortages" string="⚠️ View Material Shortages" type="object" class="btn-warning"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title mb-4">
+                            <h1 style="color: #1e293b; font-weight: 800; font-size: 1.85rem;">
+                                🏭 Plant Command Center &amp; Live Shopfloor Monitor
+                            </h1>
+                            <p class="text-muted" style="font-size: 0.95rem;">
+                                Real-time operational pulse: production velocity, machine availability, raw material flow, and live batch costing.
+                            </p>
+                        </div>
+
+                        <!-- KPI Stat Cards Container -->
+                        <div class="row g-3 mb-4">
+                            <!-- Card 1: Active Batches -->
+                            <div class="col-12 col-md-3">
+                                <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #fff; border-radius: 12px; padding: 18px;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px; color: #94a3b8;">Active Batches</span>
+                                        <i class="fa fa-cogs" style="font-size: 1.4rem; color: #38bdf8;"></i>
+                                    </div>
+                                    <h2 class="display-6 fw-bold mb-1" style="color: #38bdf8;">
+                                        <field name="active_orders_count"/>
+                                    </h2>
+                                    <button name="action_open_active_orders" type="object" class="btn btn-link p-0 text-start" style="color: #7dd3fc; font-size: 0.85rem; text-decoration: none;">
+                                        View Manufacturing Orders →
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Units Done Today -->
+                            <div class="col-12 col-md-3">
+                                <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%); color: #fff; border-radius: 12px; padding: 18px;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px; color: #a7f3d0;">Output Today</span>
+                                        <i class="fa fa-cubes" style="font-size: 1.4rem; color: #34d399;"></i>
+                                    </div>
+                                    <h2 class="display-6 fw-bold mb-1" style="color: #fff;">
+                                        <field name="units_produced_today"/>
+                                    </h2>
+                                    <span style="font-size: 0.85rem; color: #d1fae5;">
+                                        Completed Batches: <field name="completed_today_count"/>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Machine Availability -->
+                            <div class="col-12 col-md-3">
+                                <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); color: #fff; border-radius: 12px; padding: 18px;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px; color: #c7d2fe;">Line Availability</span>
+                                        <i class="fa fa-tachometer" style="font-size: 1.4rem; color: #818cf8;"></i>
+                                    </div>
+                                    <h2 class="display-6 fw-bold mb-1" style="color: #a5b4fc;">
+                                        <field name="machine_utilization_pct"/>%
+                                    </h2>
+                                    <button name="action_open_machines" type="object" class="btn btn-link p-0 text-start" style="color: #c7d2fe; font-size: 0.85rem; text-decoration: none;">
+                                        Running: <field name="running_machines"/> / <field name="total_machines"/> Lines →
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Shortages & Scrap Alert -->
+                            <div class="col-12 col-md-3">
+                                <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(135deg, #831843 0%, #9f1239 100%); color: #fff; border-radius: 12px; padding: 18px;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px; color: #fbcfe8;">Material &amp; Scrap</span>
+                                        <i class="fa fa-exclamation-triangle" style="font-size: 1.4rem; color: #f472b6;"></i>
+                                    </div>
+                                    <h2 class="display-6 fw-bold mb-1" style="color: #fff;">
+                                        <field name="shortage_alerts_count"/>
+                                    </h2>
+                                    <span style="font-size: 0.85rem; color: #fce7f3;">
+                                        Scrap Rate: <field name="avg_scrap_rate_pct"/>% (<field name="today_scrap_units"/> units)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Operational Insights -->
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <div class="card shadow-sm border p-3" style="border-radius: 12px;">
+                                    <h5 class="fw-bold mb-3" style="color: #334155;">
+                                        <i class="fa fa-bolt me-2 text-warning"></i>Quick Shopfloor Shortcuts
+                                    </h5>
+                                    <div class="d-grid gap-2">
+                                        <button name="action_open_quick_run_wizard" type="object" class="btn btn-outline-primary text-start p-2">
+                                            <i class="fa fa-play-circle me-2"></i> <strong>Launch New Batch</strong> - Schedule production order in 10 seconds
+                                        </button>
+                                        <button name="%(action_factory_material_requisition)d" type="action" class="btn btn-outline-secondary text-start p-2">
+                                            <i class="fa fa-clipboard me-2"></i> <strong>Material Requisition Slip</strong> - Issue raw materials to shop floor
+                                        </button>
+                                        <button name="%(action_factory_machine_downtime)d" type="action" class="btn btn-outline-danger text-start p-2">
+                                            <i class="fa fa-wrench me-2"></i> <strong>Report Machine Breakdown</strong> - Trigger maintenance alert
+                                        </button>
+                                        <button name="%(action_factory_cost_analysis)d" type="action" class="btn btn-outline-success text-start p-2">
+                                            <i class="fa fa-line-chart me-2"></i> <strong>Batch Cost &amp; Profit Analysis</strong> - View margins across products
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="card shadow-sm border p-3" style="border-radius: 12px; background-color: #f8fafc;">
+                                    <h5 class="fw-bold mb-3" style="color: #334155;">
+                                        <i class="fa fa-info-circle me-2 text-info"></i>Factory Status Overview
+                                    </h5>
+                                    <table class="table table-sm table-borderless mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-muted">Target Company:</td>
+                                                <td class="fw-bold"><field name="company_id"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Active Machinery:</td>
+                                                <td><span class="badge bg-success"><field name="running_machines"/> Running</span> <span class="badge bg-danger"><field name="breakdown_machines"/> Faulted</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Pending Material Requests:</td>
+                                                <td class="fw-bold"><field name="pending_requisitions"/> requests waiting</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">Today Estimated Manufacturing Absorption:</td>
+                                                <td class="fw-bold text-primary">€<field name="today_factory_cost"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Dashboard Action -->
+        <record id="action_factory_dashboard" model="ir.actions.act_window">
+            <field name="name">Smart Factory Command Center</field>
+            <field name="res_model">factory.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+    </data>
+</odoo>

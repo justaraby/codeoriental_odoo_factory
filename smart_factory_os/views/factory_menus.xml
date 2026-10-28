@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root Menu -->
+        <menuitem id="menu_factory_root"
+                  name="Smart Factory"
+                  sequence="15"
+                  web_icon="smart_factory_os,static/description/icon.png"
+                  groups="group_factory_operator"/>
+
+        <!-- 1. Command Center (Default View) -->
+        <menuitem id="menu_factory_dashboard"
+                  name="🚀 Command Center"
+                  parent="menu_factory_root"
+                  action="action_factory_dashboard"
+                  sequence="1"/>
+
+        <!-- 2. Manufacturing Batches -->
+        <menuitem id="menu_factory_production_parent"
+                  name="🏭 Manufacturing"
+                  parent="menu_factory_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_factory_production_orders"
+                  name="All Production Batches"
+                  parent="menu_factory_production_parent"
+                  action="mrp.action_mrp_production_form"
+                  sequence="1"/>
+
+        <menuitem id="menu_factory_shopfloor_kiosk"
+                  name="📱 Shopfloor Operator Kiosk"
+                  parent="menu_factory_production_parent"
+                  action="action_factory_shopfloor_kiosk"
+                  sequence="2"/>
+
+        <menuitem id="menu_factory_quick_launch"
+                  name="⚡ Launch Instant Batch"
+                  parent="menu_factory_production_parent"
+                  action="action_factory_quick_run_wizard"
+                  sequence="3"/>
+
+        <menuitem id="menu_factory_bom"
+                  name="Bills of Materials (BOM)"
+                  parent="menu_factory_production_parent"
+                  action="mrp.mrp_bom_form_action"
+                  sequence="4"
+                  groups="group_factory_supervisor"/>
+
+        <menuitem id="menu_factory_scrap"
+                  name="Scrap &amp; Waste Records"
+                  parent="menu_factory_production_parent"
+                  action="stock.action_stock_scrap"
+                  sequence="5"/>
+
+        <!-- 3. Material Supply & Requisitions -->
+        <menuitem id="menu_factory_materials_parent"
+                  name="📦 Materials &amp; Shortages"
+                  parent="menu_factory_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_factory_material_req"
+                  name="Shopfloor Material Requisitions"
+                  parent="menu_factory_materials_parent"
+                  action="action_factory_material_requisition"
+                  sequence="1"/>
+
+        <!-- 4. Machinery & Asset Health -->
+        <menuitem id="menu_factory_machines_parent"
+                  name="⚙️ Machinery &amp; Lines"
+                  parent="menu_factory_root"
+                  sequence="30"/>
+
+        <menuitem id="menu_factory_machines"
+                  name="Machinery &amp; Equipment"
+                  parent="menu_factory_machines_parent"
+                  action="action_factory_machine"
+                  sequence="1"/>
+
+        <menuitem id="menu_factory_workcenters"
+                  name="Work Centers &amp; Lines"
+                  parent="menu_factory_machines_parent"
+                  action="mrp.mrp_workcenter_action"
+                  sequence="2"/>
+
+        <menuitem id="menu_factory_downtimes"
+                  name="Breakdown &amp; Downtime Log"
+                  parent="menu_factory_machines_parent"
+                  action="action_factory_machine_downtime"
+                  sequence="3"/>
+
+        <!-- 5. Shifts & Workforce -->
+        <menuitem id="menu_factory_shifts_parent"
+                  name="👥 Shifts &amp; Handover"
+                  parent="menu_factory_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_factory_shift_logs"
+                  name="Daily Shift Logs &amp; Handover"
+                  parent="menu_factory_shifts_parent"
+                  action="action_factory_shift_log"
+                  sequence="1"/>
+
+        <menuitem id="menu_factory_shifts"
+                  name="Shift Schedules"
+                  parent="menu_factory_shifts_parent"
+                  action="action_factory_shift"
+                  sequence="2"
+                  groups="group_factory_supervisor"/>
+
+        <!-- 6. Costing & Profitability -->
+        <menuitem id="menu_factory_costing_parent"
+                  name="💰 Costing &amp; Profit"
+                  parent="menu_factory_root"
+                  sequence="50"
+                  groups="group_factory_supervisor"/>
+
+        <menuitem id="menu_factory_cost_analysis"
+                  name="Batch Cost &amp; Profit Analysis"
+                  parent="menu_factory_costing_parent"
+                  action="action_factory_cost_analysis"
+                  sequence="1"/>
+
+        <!-- 7. Setup & Industry Templates -->
+        <menuitem id="menu_factory_config_parent"
+                  name="🧙‍♂️ Setup &amp; Presets"
+                  parent="menu_factory_root"
+                  sequence="60"
+                  groups="group_factory_manager"/>
+
+        <menuitem id="menu_factory_wizard"
+                  name="Interactive Setup Wizard"
+                  parent="menu_factory_config_parent"
+                  action="action_factory_onboarding_wizard_menu"
+                  sequence="1"/>
+
+        <menuitem id="menu_factory_templates"
+                  name="Industry Factory Profiles"
+                  parent="menu_factory_config_parent"
+                  action="action_factory_industry_template"
+                  sequence="2"/>
+    </data>
+</odoo>

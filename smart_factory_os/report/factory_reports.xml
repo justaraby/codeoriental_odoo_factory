@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Batch Traveler / Shopfloor Job Card -->
+        <record id="action_report_batch_traveler" model="ir.actions.report">
+            <field name="name">Batch Job Card &amp; Traveler (Barcode)</field>
+            <field name="model">mrp.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">smart_factory_os.report_batch_traveler_template</field>
+            <field name="report_file">smart_factory_os.report_batch_traveler_template</field>
+            <field name="print_report_name">'JobCard - %s - %s' % (object.factory_batch_code or object.name, object.product_id.name)</field>
+            <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Material Requisition Slip -->
+        <record id="action_report_material_requisition_pdf" model="ir.actions.report">
+            <field name="name">Material Requisition Slip</field>
+            <field name="model">factory.material.requisition</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">smart_factory_os.report_material_requisition_template</field>
+            <field name="report_file">smart_factory_os.report_material_requisition_template</field>
+            <field name="print_report_name">'MaterialRequisition - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_factory_material_requisition"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Batch Cost & Margin Sheet -->
+        <record id="action_report_cost_analysis_pdf" model="ir.actions.report">
+            <field name="name">Batch Cost Absorption &amp; Margin Sheet</field>
+            <field name="model">mrp.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">smart_factory_os.report_cost_analysis_template</field>
+            <field name="report_file">smart_factory_os.report_cost_analysis_template</field>
+            <field name="print_report_name">'CostSheet - %s' % (object.factory_batch_code or object.name)</field>
+            <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

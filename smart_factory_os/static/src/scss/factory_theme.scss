@@ -1,0 +1,37 @@
+/* Smart Factory OS - Theme & Shopfloor UI Enhancements */
+
+.o_factory_dashboard_form {
+    background-color: #f8fafc;
+
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 12px;
+
+        &:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+        }
+    }
+}
+
+.badge-factory-running {
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.badge-factory-idle {
+    background-color: #f59e0b !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.badge-factory-breakdown {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.o_stat_button_alert {
+    background-color: #fee2e2 !important;
+    color: #b91c1c !important;
+}

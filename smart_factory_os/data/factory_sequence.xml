@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Production Batch Code -->
+        <record id="seq_factory_batch_code" model="ir.sequence">
+            <field name="name">Factory Batch Tracking Code</field>
+            <field name="code">factory.batch.code</field>
+            <field name="prefix">BATCH-%(year)s-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Machine Downtime Incident -->
+        <record id="seq_factory_machine_downtime" model="ir.sequence">
+            <field name="name">Machine Breakdown Incident</field>
+            <field name="code">factory.machine.downtime</field>
+            <field name="prefix">INC-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Shift Handover Log -->
+        <record id="seq_factory_shift_log" model="ir.sequence">
+            <field name="name">Factory Shift Log</field>
+            <field name="code">factory.shift.log</field>
+            <field name="prefix">SFT-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Material Requisition -->
+        <record id="seq_factory_material_req" model="ir.sequence">
+            <field name="name">Factory Material Requisition</field>
+            <field name="code">factory.material.requisition</field>
+            <field name="prefix">REQ-%(year)s-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

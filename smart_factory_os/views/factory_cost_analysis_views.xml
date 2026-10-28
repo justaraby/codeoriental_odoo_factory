@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Batch Cost Analysis Tree View -->
+        <record id="view_factory_cost_analysis_tree" model="ir.ui.view">
+            <field name="name">factory.cost.analysis.tree</field>
+            <field name="model">factory.cost.analysis</field>
+            <field name="arch" type="xml">
+                <tree string="Batch Cost &amp; Profit Analysis" create="false" delete="false">
+                    <field name="date_planned_start"/>
+                    <field name="batch_code"/>
+                    <field name="product_id"/>
+                    <field name="qty_produced"/>
+                    <field name="cost_raw_materials" widget="monetary" sum="Total Materials"/>
+                    <field name="cost_direct_labor" widget="monetary" sum="Total Labor"/>
+                    <field name="cost_machine_power" widget="monetary" sum="Total Machine"/>
+                    <field name="cost_factory_overhead" widget="monetary" sum="Total Overhead"/>
+                    <field name="cost_total_batch" widget="monetary" sum="Total Absorption"/>
+                    <field name="cost_per_unit" widget="monetary"/>
+                    <field name="actual_revenue" widget="monetary" sum="Total Revenue"/>
+                    <field name="gross_profit" widget="monetary" sum="Gross Profit" decoration-success="gross_profit &gt; 0" decoration-danger="gross_profit &lt; 0"/>
+                    <field name="margin_pct" widget="badge" decoration-success="margin_pct &gt;= 25" decoration-warning="margin_pct &lt; 25 and margin_pct &gt; 0" decoration-danger="margin_pct &lt;= 0"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Batch Cost Analysis Pivot View -->
+        <record id="view_factory_cost_analysis_pivot" model="ir.ui.view">
+            <field name="name">factory.cost.analysis.pivot</field>
+            <field name="model">factory.cost.analysis</field>
+            <field name="arch" type="xml">
+                <pivot string="Batch Profitability Matrix" sample="1">
+                    <field name="product_id" type="row"/>
+                    <field name="date_planned_start" interval="month" type="col"/>
+                    <field name="cost_total_batch" type="measure"/>
+                    <field name="actual_revenue" type="measure"/>
+                    <field name="gross_profit" type="measure"/>
+                    <field name="margin_pct" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Batch Cost Analysis Graph View -->
+        <record id="view_factory_cost_analysis_graph" model="ir.ui.view">
+            <field name="name">factory.cost.analysis.graph</field>
+            <field name="model">factory.cost.analysis</field>
+            <field name="arch" type="xml">
+                <graph string="Cost vs Revenue Comparison" sample="1" type="bar">
+                    <field name="product_id"/>
+                    <field name="cost_total_batch" type="measure"/>
+                    <field name="actual_revenue" type="measure"/>
+                    <field name="gross_profit" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_factory_cost_analysis_search" model="ir.ui.view">
+            <field name="name">factory.cost.analysis.search</field>
+            <field name="model">factory.cost.analysis</field>
+            <field name="arch" type="xml">
+                <search string="Search Batch Costs">
+                    <field name="batch_code"/>
+                    <field name="product_id"/>
+                    <filter string="Profitable (&gt; 25% Margin)" name="high_margin" domain="[('margin_pct', '&gt;=', 25)]"/>
+                    <filter string="Low Margin / Breakeven" name="low_margin" domain="[('margin_pct', '&gt;=', 0), ('margin_pct', '&lt;', 25)]"/>
+                    <filter string="Loss-Making / Negative Margin" name="negative_margin" domain="[('margin_pct', '&lt;', 0)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Finished Product" name="group_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Start Month" name="group_month" context="{'group_by': 'date_planned_start:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_factory_cost_analysis" model="ir.actions.act_window">
+            <field name="name">Batch Cost &amp; Profitability Analysis</field>
+            <field name="res_model">factory.cost.analysis</field>
+            <field name="view_mode">tree,pivot,graph</field>
+            <field name="search_view_id" ref="view_factory_cost_analysis_search"/>
+        </record>
+    </data>
+</odoo>

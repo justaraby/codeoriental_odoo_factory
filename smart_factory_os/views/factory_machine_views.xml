@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Machine Kanban View -->
+        <record id="view_factory_machine_kanban" model="ir.ui.view">
+            <field name="name">factory.machine.kanban</field>
+            <field name="model">factory.machine</field>
+            <field name="arch" type="xml">
+                <kanban sample="1">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="workcenter_id"/>
+                    <field name="state"/>
+                    <field name="hourly_cost"/>
+                    <field name="total_downtime_hours"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click p-3 rounded shadow-sm border #{record.state.raw_value == 'running' ? 'border-success' : (record.state.raw_value == 'breakdown' ? 'border-danger' : 'border-warning')}" style="border-width: 2px !important;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="fs-6 text-dark"><field name="name"/></strong>
+                                    <span t-attf-class="badge #{record.state.raw_value == 'running' ? 'bg-success' : (record.state.raw_value == 'breakdown' ? 'bg-danger' : (record.state.raw_value == 'idle' ? 'bg-warning text-dark' : 'bg-info'))}">
+                                        <field name="state"/>
+                                    </span>
+                                </div>
+                                <div class="text-muted small mb-2">
+                                    <i class="fa fa-tag me-1"></i>Tag: <field name="code"/> | <i class="fa fa-industry me-1"></i>Line: <field name="workcenter_id"/>
+                                </div>
+                                <div class="row g-2 text-center my-2 py-1 bg-light rounded">
+                                    <div class="col-6 border-end">
+                                        <span class="text-muted small d-block">Hourly Rate</span>
+                                        <strong>€<field name="hourly_cost"/>/h</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted small d-block">Downtime</span>
+                                        <strong class="text-danger"><field name="total_downtime_hours"/> hrs</strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                                    <button name="action_set_running" type="object" class="btn btn-sm btn-outline-success" invisible="state == 'running'">
+                                        ▶ Run
+                                    </button>
+                                    <button name="action_report_breakdown" type="object" class="btn btn-sm btn-outline-danger" invisible="state == 'breakdown'">
+                                        ⚠️ Breakdown
+                                    </button>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Machine Form View -->
+        <record id="view_factory_machine_form" model="ir.ui.view">
+            <field name="name">factory.machine.form</field>
+            <field name="model">factory.machine</field>
+            <field name="arch" type="xml">
+                <form string="Factory Machine">
+                    <header>
+                        <button name="action_set_running" string="Mark Operational" type="object" class="btn-success" invisible="state == 'running'"/>
+                        <button name="action_set_idle" string="Set Standby / Idle" type="object" class="btn-secondary" invisible="state == 'idle'"/>
+                        <button name="action_report_breakdown" string="Report Breakdown" type="object" class="btn-danger" invisible="state == 'breakdown'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="running,idle,maintenance,breakdown"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_view_downtimes" type="object" icon="fa-history">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="downtime_count"/></span>
+                                    <span class="o_stat_text">Breakdowns</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Machine / Equipment Name"/>
+                            <h1><field name="name" placeholder="e.g., Hydraulic Injection Press 200T"/></h1>
+                        </div>
+                        <group>
+                            <group string="Identification &amp; Location">
+                                <field name="code"/>
+                                <field name="workcenter_id"/>
+                                <field name="serial_number"/>
+                                <field name="model_name"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group string="Operating Parameters &amp; Costs">
+                                <field name="hourly_cost"/>
+                                <field name="power_kw"/>
+                                <field name="installation_date"/>
+                                <field name="last_maintenance_date"/>
+                                <field name="next_maintenance_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Downtime &amp; Maintenance Logs" name="downtime_logs">
+                                <field name="downtime_ids">
+                                    <tree decoration-danger="state == 'open'" decoration-success="state == 'resolved'">
+                                        <field name="name"/>
+                                        <field name="reason"/>
+                                        <field name="start_time"/>
+                                        <field name="end_time"/>
+                                        <field name="duration_hours"/>
+                                        <field name="cost_impact" widget="monetary"/>
+                                        <field name="state" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Technical Notes" name="notes">
+                                <field name="notes" placeholder="Standard operating procedures, lubrication intervals, spare parts references..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Machine Tree View -->
+        <record id="view_factory_machine_tree" model="ir.ui.view">
+            <field name="name">factory.machine.tree</field>
+            <field name="model">factory.machine</field>
+            <field name="arch" type="xml">
+                <tree string="Factory Machinery" decoration-danger="state == 'breakdown'" decoration-warning="state == 'idle'" decoration-success="state == 'running'">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="workcenter_id"/>
+                    <field name="state" widget="badge"/>
+                    <field name="hourly_cost" widget="monetary"/>
+                    <field name="total_downtime_hours"/>
+                    <field name="next_maintenance_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Machine Actions -->
+        <record id="action_factory_machine" model="ir.actions.act_window">
+            <field name="name">Machines &amp; Shop Floor Equipment</field>
+            <field name="res_model">factory.machine</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- Downtime Incident Tree View -->
+        <record id="view_factory_machine_downtime_tree" model="ir.ui.view">
+            <field name="name">factory.machine.downtime.tree</field>
+            <field name="model">factory.machine.downtime</field>
+            <field name="arch" type="xml">
+                <tree string="Downtime Incidents" decoration-danger="state == 'open'" decoration-success="state == 'resolved'">
+                    <field name="name"/>
+                    <field name="machine_id"/>
+                    <field name="workcenter_id"/>
+                    <field name="reason"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="duration_hours"/>
+                    <field name="cost_impact" widget="monetary"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Downtime Incident Form View -->
+        <record id="view_factory_machine_downtime_form" model="ir.ui.view">
+            <field name="name">factory.machine.downtime.form</field>
+            <field name="model">factory.machine.downtime</field>
+            <field name="arch" type="xml">
+                <form string="Machine Breakdown Incident">
+                    <header>
+                        <button name="action_resolve" string="Resolve &amp; Restore Machine" type="object" class="btn-success" invisible="state == 'resolved'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="open,resolved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Equipment Affected">
+                                <field name="machine_id"/>
+                                <field name="workcenter_id"/>
+                                <field name="reason"/>
+                            </group>
+                            <group string="Timing &amp; Loss Impact">
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="duration_hours"/>
+                                <field name="cost_impact" widget="monetary"/>
+                            </group>
+                        </group>
+                        <group string="Root Cause &amp; Corrective Action">
+                            <field name="technician_notes" placeholder="Describe mechanical fault, parts replaced, technician corrective work..."/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Downtime Incident Action -->
+        <record id="action_factory_machine_downtime" model="ir.actions.act_window">
+            <field name="name">Machine Breakdown Log</field>
+            <field name="res_model">factory.machine.downtime</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

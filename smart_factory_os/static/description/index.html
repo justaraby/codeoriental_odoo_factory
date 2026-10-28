@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Factory Operating System | Turnkey Factory ERP for Odoo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --secondary: #0f172a;
+            --accent: #10b981;
+            --accent-warm: #f59e0b;
+            --danger: #ef4444;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: #ffffff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e293b 100%);
+            color: #ffffff;
+            padding: 70px 20px 90px;
+            text-align: center;
+            border-radius: 0 0 32px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 780px;
+            margin: 0 auto 35px;
+            font-weight: 400;
+        }
+
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .hero-tag-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-banner-img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-top: 10px;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-subtitle {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .comp-card {
+            border-radius: 16px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
+        }
+
+        .comp-card.old {
+            background-color: #fff1f2;
+            border-color: #fecdd3;
+        }
+
+        .comp-card.new {
+            background-color: #ecfdf5;
+            border-color: #a7f3d0;
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+            position: relative;
+        }
+
+        .comp-card-badge {
+            position: absolute;
+            top: -14px;
+            right: 25px;
+            background: #10b981;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+        }
+
+        .comp-card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .comp-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .comp-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .comp-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Features Showcase */
+        .features-section {
+            padding: 80px 0;
+            background-color: var(--bg-light);
+        }
+
+        .feature-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+
+        .feature-block.reverse {
+            direction: rtl;
+        }
+
+        .feature-block.reverse .feature-content {
+            direction: ltr;
+        }
+
+        .feature-block.reverse .feature-media {
+            direction: ltr;
+        }
+
+        .feature-content h3 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .feature-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px;
+        }
+
+        .feature-list li {
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .feature-media img {
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Industry Presets Grid */
+        .industries-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .industry-box {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .industry-box:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .industry-box i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .industry-box h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+
+        .industry-box p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* 4-Pillar Costing Card */
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .pillar-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .pillar-card strong {
+            display: block;
+            font-size: 1.05rem;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+
+        .pillar-card span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Pricing & Guarantee Box */
+        .cta-box {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff;
+            border-radius: 24px;
+            padding: 50px 30px;
+            text-align: center;
+            margin: 60px 0;
+            box-shadow: 0 20px 25px -5px rgba(2, 132, 199, 0.3);
+        }
+
+        .cta-price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin: 15px 0;
+        }
+
+        .cta-price span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0.85;
+        }
+
+        /* Footer */
+        .app-footer {
+            background-color: var(--secondary);
+            color: #94a3b8;
+            padding: 40px 0 25px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .app-footer a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .hero-title { font-size: 2.1rem; }
+            .comparison-grid, .feature-block, .industry-grid, .pillar-grid {
+                grid-template-columns: 1fr;
+            }
+            .feature-block.reverse { direction: ltr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="hero-badge">
+                <i class="fa fa-sparkles"></i> Zero Consultant Needed • Turnkey Solution
+            </div>
+            <h1 class="hero-title">Smart Factory Operating System</h1>
+            <p class="hero-subtitle">
+                Transform Odoo into an intuitive, all-in-one manufacturing operating system. Launch in 60 seconds with guided industry presets, plant command center, touch kiosk for operators, and real-time batch margin tracking.
+            </p>
+
+            <div class="hero-tags">
+                <div class="hero-tag-item"><i class="fa fa-check text-success"></i> Odoo 17.0, 18.0, 19.0 &amp; 20.0 Ready</div>
+                <div class="hero-tag-item"><i class="fa fa-check text-success"></i> Community &amp; Enterprise</div>
+                <div class="hero-tag-item"><i class="fa fa-check text-success"></i> Odoo.sh &amp; On-Premise</div>
+                <div class="hero-tag-item"><i class="fa fa-tag text-warning"></i> One-Time License: €65</div>
+            </div>
+
+            <img src="banner.png" alt="Smart Factory Operating System Banner" class="hero-banner-img">
+        </div>
+    </header>
+
+    <!-- WHY FACTORIES STRUGGLE WITH STANDARD ODOO -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">The Game Changer</span>
+                <h2 class="section-title">Standard Odoo MRP vs. Smart Factory OS</h2>
+                <p class="text-muted" style="max-width: 650px; margin: 0 auto;">Why spend thousands of dollars on complex configurations when you can deploy a proven, automated factory architecture in 1 click?</p>
+            </div>
+
+            <div class="comparison-grid">
+                <!-- Standard Odoo -->
+                <div class="comp-card old">
+                    <h3 style="color: #991b1b;"><i class="fa fa-times-circle me-2"></i> Standard Odoo MRP</h3>
+                    <ul class="comp-list">
+                        <li><i class="fa fa-times text-danger"></i> Requires 50+ hours of expensive consultant setup for workcenters and routings.</li>
+                        <li><i class="fa fa-times text-danger"></i> Disconnected views: MOs, work orders, stock moves, scrap, and machines scattered everywhere.</li>
+                        <li><i class="fa fa-times text-danger"></i> Overwhelming screens with 40+ fields confusing shopfloor operators.</li>
+                        <li><i class="fa fa-times text-danger"></i> No real-time 4-pillar unit cost calculation (materials + labor + machine + overhead).</li>
+                        <li><i class="fa fa-times text-danger"></i> No live batch profit margin indicator vs catalog selling prices.</li>
+                        <li><i class="fa fa-times text-danger"></i> Lack of 1-click material requisition and automated shortage PO generation.</li>
+                    </ul>
+                </div>
+
+                <!-- Smart Factory OS -->
+                <div class="comp-card new">
+                    <span class="comp-card-badge">Zero Consultant</span>
+                    <h3 style="color: #065f46;"><i class="fa fa-check-circle me-2"></i> With Smart Factory OS</h3>
+                    <ul class="comp-list">
+                        <li><i class="fa fa-check text-success"></i> <strong>60-Second Setup Wizard:</strong> Pick your industry and deploy complete work centers, lines, and BOMs.</li>
+                        <li><i class="fa fa-check text-success"></i> <strong>Unified Plant Command Center:</strong> Monitor active orders, line availability, output, and costs live.</li>
+                        <li><i class="fa fa-check text-success"></i> <strong>Touch-friendly Shopfloor Kiosk:</strong> Big, simplified buttons for machine operators.</li>
+                        <li><i class="fa fa-check text-success"></i> <strong>4-Pillar Batch Costing:</strong> Real unit cost (Materials, Labor, Machine energy, Factory Overhead).</li>
+                        <li><i class="fa fa-check text-success"></i> <strong>Live Batch Margin %:</strong> Immediate gross margin indicator on every manufacturing order.</li>
+                        <li><i class="fa fa-check text-success"></i> <strong>1-Click Shortage Requisitions:</strong> Request materials from floor and create RFQ with 1 button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE FEATURES WALKTHROUGH -->
+    <section class="features-section">
+        <div class="container">
+            <!-- Feature 1: Setup Wizard -->
+            <div class="feature-block">
+                <div class="feature-content">
+                    <span class="section-subtitle">Feature 1</span>
+                    <h3>Interactive Factory Setup Wizard</h3>
+                    <p>
+                        No need to hire an Odoo functional expert. Launch our onboarding wizard, select your factory industry type, specify your shift schedule, and our automation engine deploys:
+                    </p>
+                    <ul class="feature-list">
+                        <li><i class="fa fa-check-circle text-primary"></i> Pre-configured Work Centers with accurate hourly operating rates.</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> Shift schedules (Single, Double, or 24/7 Continuous 3 shifts).</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> Factory overhead percentage allocation rules.</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> Sample raw materials, finished good, and test BOM ready to produce!</li>
+                    </ul>
+                </div>
+                <div class="feature-media">
+                    <img src="screenshot_wizard.png" alt="Factory Setup Wizard">
+                </div>
+            </div>
+
+            <!-- Feature 2: Command Center -->
+            <div class="feature-block reverse">
+                <div class="feature-content">
+                    <span class="section-subtitle">Feature 2</span>
+                    <h3>Plant Command Center &amp; Live Shopfloor Monitor</h3>
+                    <p>
+                        A single screen showing everything a factory owner or plant director cares about in real time:
+                    </p>
+                    <ul class="feature-list">
+                        <li><i class="fa fa-check-circle text-primary"></i> <strong>Active Batches Velocity:</strong> Output quantity produced today vs target.</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> <strong>Line Availability (OEE):</strong> Running machines vs faulted breakdowns.</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> <strong>Shortage Alerts:</strong> Pending raw material bottlenecks highlighted in red.</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> <strong>Scrap Alert Thresholds:</strong> Immediate flag if scrap rate exceeds tolerance.</li>
+                        <li><i class="fa fa-check-circle text-primary"></i> <strong>1-Click Action Buttons:</strong> Launch batch, report breakdown, requisition parts.</li>
+                    </ul>
+                </div>
+                <div class="feature-media">
+                    <img src="screenshot_dashboard.png" alt="Plant Command Center">
+                </div>
+            </div>
+
+            <!-- Feature 3: 4-Pillar Batch Costing -->
+            <div class="feature-block">
+                <div class="feature-content">
+                    <span class="section-subtitle">Feature 3</span>
+                    <h3>4-Pillar Live Batch Costing &amp; Profit Engine</h3>
+                    <p>
+                        Know your TRUE product cost before shipping goods. Smart Factory OS automatically aggregates the 4 cost pillars right onto the manufacturing order:
+                    </p>
+                    <div class="pillar-grid">
+                        <div class="pillar-card">
+                            <i class="fa fa-cubes text-primary mb-2" style="font-size: 1.4rem;"></i>
+                            <strong>1. Materials</strong>
+                            <span>Real consumption costs</span>
+                        </div>
+                        <div class="pillar-card">
+                            <i class="fa fa-users text-primary mb-2" style="font-size: 1.4rem;"></i>
+                            <strong>2. Labor</strong>
+                            <span>Operator hours × wage rate</span>
+                        </div>
+                        <div class="pillar-card">
+                            <i class="fa fa-plug text-primary mb-2" style="font-size: 1.4rem;"></i>
+                            <strong>3. Machine</strong>
+                            <span>Machine hours × power rate</span>
+                        </div>
+                        <div class="pillar-card">
+                            <i class="fa fa-building text-primary mb-2" style="font-size: 1.4rem;"></i>
+                            <strong>4. Overhead</strong>
+                            <span>Rent &amp; indirect absorption</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.95rem;">
+                        <i class="fa fa-arrow-right text-success me-1"></i> Dynamically computes <strong>Target Min Sale Price</strong> and <strong>Gross Profit Margin %</strong> on every order.
+                    </p>
+                </div>
+                <div class="feature-media">
+                    <img src="banner.png" alt="Batch Costing Engine">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRE-CONFIGURED INDUSTRY TEMPLATES -->
+    <section class="industries-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Out of the Box</span>
+                <h2 class="section-title">8 Ready-to-Deploy Industry Presets</h2>
+                <p class="text-muted" style="max-width: 600px; margin: 0 auto;">Select your industry during setup and let the module auto-configure work centers, hourly rates, and standard procedures.</p>
+            </div>
+
+            <div class="industry-grid">
+                <div class="industry-box">
+                    <i class="fa fa-utensils"></i>
+                    <h4>Food &amp; Bakery</h4>
+                    <p>Mixing, thermal baking, filling, sterile packaging lines.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-cubes"></i>
+                    <h4>Plastics &amp; Molding</h4>
+                    <p>Injection presses, mold clamping, trimming &amp; regrinding.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-wrench"></i>
+                    <h4>Metal &amp; CNC</h4>
+                    <p>Laser cutting, press brake bending, welding &amp; grinding.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-tags"></i>
+                    <h4>Textile &amp; Garments</h4>
+                    <p>Spreading, marker cutting, modular sewing, steam pressing.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-flask"></i>
+                    <h4>Chemicals &amp; Soap</h4>
+                    <p>Compounding reactors, homogenization, automated bottling.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-tree"></i>
+                    <h4>Furniture &amp; Wood</h4>
+                    <p>Beam saws, CNC edge-banding, case clamp assembly.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-microchip"></i>
+                    <h4>Electronics &amp; High-Tech</h4>
+                    <p>ESD benches, wire harness prep, automated functional test.</p>
+                </div>
+                <div class="industry-box">
+                    <i class="fa fa-cogs"></i>
+                    <h4>General Job Shop</h4>
+                    <p>Custom fabrication, multi-purpose machining, prototype runs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- READY PRINTABLE REPORTS -->
+    <section class="features-section" style="background: #ffffff; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Shop Floor Documentation</span>
+                <h2 class="section-title">Professional Barcode Job Travelers &amp; Slips</h2>
+            </div>
+            <div class="row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div class="comp-card" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <h4><i class="fa fa-barcode text-primary me-2"></i> Batch Job Traveler</h4>
+                    <p class="small text-muted">Complete production traveler with Code128 barcode, bill of components checklist, line operation checkpoints, and operator/QC sign-off boxes.</p>
+                </div>
+                <div class="comp-card" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <h4><i class="fa fa-clipboard-list text-primary me-2"></i> Material Requisition Slip</h4>
+                    <p class="small text-muted">Official shopfloor requisition slip for warehouse pickers with shortage warnings, requested quantities, and storekeeper receipt signatures.</p>
+                </div>
+                <div class="comp-card" style="background: #f8fafc; border-color: #e2e8f0;">
+                    <h4><i class="fa fa-file-invoice-dollar text-primary me-2"></i> Batch Cost &amp; Profit Sheet</h4>
+                    <p class="small text-muted">Detailed executive cost sheet detailing the 4 cost pillars, real unit cost, catalog price, and realized gross profit margin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION & PRICING -->
+    <div class="container">
+        <div class="cta-box">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">One-Time Purchase • Lifetime License</span>
+            <div class="cta-price">€65 <span>/ one-time</span></div>
+            <p style="font-size: 1.15rem; max-width: 600px; margin: 0 auto 25px; opacity: 0.95;">
+                Deploy your turnkey factory in minutes. Save dozens of consulting hours and run your manufacturing with complete confidence.
+            </p>
+            <div style="font-size: 0.9rem; opacity: 0.9;">
+                <i class="fa fa-shield-alt me-1"></i> Instant Download • Works with Odoo Community &amp; Enterprise • Full Source Code Included
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER / SUPPORT -->
+    <footer class="app-footer">
+        <div class="container">
+            <h4 style="color: #ffffff; margin-bottom: 8px;">CodeOriental Solutions</h4>
+            <p>Empowering Manufacturers &amp; Enterprises with Premium Odoo Apps</p>
+            <p style="margin-top: 15px;">
+                Need assistance, customization, or have questions? Email us at <a href="mailto:support@codeoriental.com">support@codeoriental.com</a>
+            </p>
+            <p class="small" style="margin-top: 25px; color: #64748b;">
+                © 2026 CodeOriental. All rights reserved. Distributed under Odoo Proprietary License (OPL-1).
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

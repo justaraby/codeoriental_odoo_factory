@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Security Category -->
+        <record id="module_category_smart_factory" model="ir.module.category">
+            <field name="name">Smart Factory Operating System</field>
+            <field name="description">Turnkey Manufacturing &amp; Shop Floor Management</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <!-- Factory Operator / Shop Floor Worker -->
+        <record id="group_factory_operator" model="res.groups">
+            <field name="name">Shop Floor Operator</field>
+            <field name="category_id" ref="module_category_smart_factory"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Production line operators: record output, report breakdowns, material requests.</field>
+        </record>
+
+        <!-- Factory Supervisor -->
+        <record id="group_factory_supervisor" model="res.groups">
+            <field name="name">Shift &amp; Line Supervisor</field>
+            <field name="category_id" ref="module_category_smart_factory"/>
+            <field name="implied_ids" eval="[(4, ref('group_factory_operator')), (4, ref('mrp.group_mrp_user'))]"/>
+            <field name="comment">Supervisors: validate shifts, launch batches, sign-off quality checks.</field>
+        </record>
+
+        <!-- Factory Plant Manager -->
+        <record id="group_factory_manager" model="res.groups">
+            <field name="name">Plant Manager / Director</field>
+            <field name="category_id" ref="module_category_smart_factory"/>
+            <field name="implied_ids" eval="[(4, ref('group_factory_supervisor')), (4, ref('mrp.group_mrp_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">Full control: Onboarding wizard, cost &amp; margin analysis, machine setup.</field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <!-- Multi-Company Rules -->
+        <record id="rule_factory_machine_company" model="ir.rule">
+            <field name="name">Factory Machine Multi-Company</field>
+            <field name="model_id" ref="model_factory_machine"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_factory_material_req_company" model="ir.rule">
+            <field name="name">Factory Material Requisition Multi-Company</field>
+            <field name="model_id" ref="model_factory_material_requisition"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_factory_shift_log_company" model="ir.rule">
+            <field name="name">Factory Shift Log Multi-Company</field>
+            <field name="model_id" ref="model_factory_shift_log"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+    </data>
+</odoo>

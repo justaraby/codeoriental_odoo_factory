@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_cost_analysis_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-family: sans-serif; color: #1e293b;">
+                            <div class="row align-items-center mb-4 pb-2 border-bottom">
+                                <div class="col-8">
+                                    <h2 class="fw-bold mb-1" style="color: #0f172a;">
+                                        BATCH ABSORPTION COST &amp; PROFITABILITY SHEET
+                                    </h2>
+                                    <h5 class="text-primary mb-0">Batch Ref: <span t-field="doc.factory_batch_code"/></h5>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <h4 class="fw-bold text-success mb-0">
+                                        Margin: <span t-field="doc.batch_margin_pct"/>%
+                                    </h4>
+                                    <span class="small text-muted">vs Catalog Price</span>
+                                </div>
+                            </div>
+
+                            <div class="card p-3 mb-4 bg-light border-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Product:</strong> <span t-field="doc.product_id.display_name"/></p>
+                                        <p class="mb-1"><strong>Produced Qty:</strong> <span t-field="doc.qty_producing"/> <span t-field="doc.product_uom_id.name"/></p>
+                                        <p class="mb-1"><strong>Production Shift:</strong> <span t-field="doc.factory_shift_id.name"/></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Batch Completed:</strong> <span t-field="doc.date_finished"/></p>
+                                        <p class="mb-1"><strong>Target Margin:</strong> <span t-field="doc.target_margin_pct"/>%</p>
+                                        <p class="mb-1"><strong>Catalog Selling Price:</strong> €<span t-field="doc.actual_product_price"/></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4 Pillar Breakdown -->
+                            <h5 class="fw-bold mb-3">4-Pillar Absorption Cost Summary</h5>
+                            <table class="table table-bordered mb-4">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Cost Pillar</th>
+                                        <th>Basis &amp; Calculation</th>
+                                        <th class="text-end">Total Amount (€)</th>
+                                        <th class="text-end">Cost per Unit (€)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Direct Raw Materials</strong></td>
+                                        <td>Actual components issued &amp; consumed</td>
+                                        <td class="text-end fw-bold">€<span t-field="doc.cost_raw_materials"/></td>
+                                        <td class="text-end">€<t t-esc="'%.2f' % (doc.cost_raw_materials / (doc.qty_producing or doc.product_qty or 1.0))"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Direct Operator Labor</strong></td>
+                                        <td>Shopfloor operation duration × wage rates</td>
+                                        <td class="text-end fw-bold">€<span t-field="doc.cost_direct_labor"/></td>
+                                        <td class="text-end">€<t t-esc="'%.2f' % (doc.cost_direct_labor / (doc.qty_producing or doc.product_qty or 1.0))"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Machinery &amp; Power Energy</strong></td>
+                                        <td>Machine running hours × hourly rate</td>
+                                        <td class="text-end fw-bold">€<span t-field="doc.cost_machine_power"/></td>
+                                        <td class="text-end">€<t t-esc="'%.2f' % (doc.cost_machine_power / (doc.qty_producing or doc.product_qty or 1.0))"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Factory Overhead Allocation</strong></td>
+                                        <td><span t-field="doc.overhead_rate_pct"/>% overhead factor (rent, utilities, administration)</td>
+                                        <td class="text-end fw-bold">€<span t-field="doc.cost_factory_overhead"/></td>
+                                        <td class="text-end">€<t t-esc="'%.2f' % (doc.cost_factory_overhead / (doc.qty_producing or doc.product_qty or 1.0))"/></td>
+                                    </tr>
+                                    <tr class="table-secondary fw-bold">
+                                        <td colspan="2">TOTAL FACTORY BATCH COST:</td>
+                                        <td class="text-end fs-5 text-dark">€<span t-field="doc.cost_total_batch"/></td>
+                                        <td class="text-end fs-5 text-dark">€<span t-field="doc.cost_per_unit"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Pricing Engine Comparison -->
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="card p-3 border">
+                                        <h6 class="fw-bold text-muted mb-2">Target Pricing Guidance</h6>
+                                        <p class="mb-1">Recommended Min Selling Price: <strong class="text-primary fs-5">€<span t-field="doc.suggested_sale_price"/></strong></p>
+                                        <p class="small text-muted mb-0">Guarantees achieving target margin of <span t-field="doc.target_margin_pct"/>%.</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card p-3 border">
+                                        <h6 class="fw-bold text-muted mb-2">Realized Profit Margin</h6>
+                                        <p class="mb-1">Actual Margin vs List Price: <strong class="text-success fs-5"><span t-field="doc.batch_margin_pct"/>%</strong></p>
+                                        <p class="small text-muted mb-0">Catalog List Price is €<span t-field="doc.actual_product_price"/> per finished unit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

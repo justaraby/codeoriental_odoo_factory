@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_material_requisition_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-family: sans-serif; color: #1e293b;">
+                            <div class="row align-items-center mb-4 pb-2 border-bottom">
+                                <div class="col-8">
+                                    <h2 class="fw-bold mb-1" style="color: #0f172a;">
+                                        SHOP FLOOR MATERIAL REQUISITION SLIP
+                                    </h2>
+                                    <h5 class="text-primary mb-0">Ref: <span t-field="doc.name"/></h5>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <span class="badge bg-secondary p-2" style="font-size: 0.95rem;">
+                                        Status: <span t-field="doc.state"/>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card p-3 mb-4 bg-light border-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Date Requested:</strong> <span t-field="doc.date"/></p>
+                                        <p class="mb-1"><strong>Requested By:</strong> <span t-field="doc.requested_by.name"/></p>
+                                        <p class="mb-1"><strong>Target Batch:</strong> <span t-field="doc.production_id.factory_batch_code"/></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Work Center:</strong> <span t-field="doc.workcenter_id.name"/></p>
+                                        <p class="mb-1"><strong>Source Warehouse Location:</strong> <span t-field="doc.source_location_id.complete_name"/></p>
+                                        <p class="mb-1"><strong>Shortage Warning:</strong> 
+                                            <t t-if="doc.has_shortage"><span class="text-danger fw-bold">YES - Purchase Pending</span></t>
+                                            <t t-else=""><span class="text-success fw-bold">ALL IN STOCK</span></t>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-2">Requested Material Items</h5>
+                            <table class="table table-sm table-bordered mb-4">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Component / Material Name</th>
+                                        <th class="text-center">Requested Qty</th>
+                                        <th class="text-center">Stock on Hand</th>
+                                        <th class="text-center">Shortage</th>
+                                        <th class="text-center">Issued (Store Sign)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.line_ids" t-as="line">
+                                        <td><strong><span t-field="line.product_id.display_name"/></strong></td>
+                                        <td class="text-center"><span t-field="line.quantity"/> <span t-field="line.uom_id.name"/></td>
+                                        <td class="text-center"><span t-field="line.qty_available"/></td>
+                                        <td class="text-center">
+                                            <t t-if="line.is_shortage">
+                                                <span class="text-danger fw-bold">-<span t-field="line.shortage_qty"/></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="text-success">OK</span>
+                                            </t>
+                                        </td>
+                                        <td class="text-center" style="width: 140px;">[ &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row mt-5 pt-4 border-top">
+                                <div class="col-6 text-center">
+                                    <p class="mb-4"><strong>Floor Supervisor Received By:</strong></p>
+                                    <p class="border-top mx-5 pt-1 small text-muted">Signature &amp; Date</p>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <p class="mb-4"><strong>Storekeeper Issued By:</strong></p>
+                                    <p class="border-top mx-5 pt-1 small text-muted">Signature &amp; Date</p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

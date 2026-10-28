@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Quick Run Wizard Form View -->
+        <record id="view_factory_quick_run_wizard_form" model="ir.ui.view">
+            <field name="name">factory.quick.run.wizard.form</field>
+            <field name="model">factory.quick.run.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Launch Instant Production Batch">
+                    <sheet>
+                        <div class="mb-3">
+                            <h4 class="fw-bold text-primary mb-1">
+                                <i class="fa fa-play-circle me-1"></i> Fast Batch Launcher
+                            </h4>
+                            <p class="text-muted small">
+                                Select product and target quantity. The engine automatically links the BOM, confirms the order, and creates the material requisition slip.
+                            </p>
+                        </div>
+                        <group>
+                            <group string="Batch Parameters">
+                                <field name="product_id" options="{'no_create': True}"/>
+                                <label for="product_qty"/>
+                                <div class="o_row">
+                                    <field name="product_qty"/>
+                                    <field name="uom_id"/>
+                                </div>
+                                <field name="bom_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Execution Schedule">
+                                <field name="shift_id"/>
+                                <field name="supervisor_id"/>
+                                <field name="date_start"/>
+                                <field name="auto_issue_materials" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_launch_batch" string="🚀 Start Production Batch" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_factory_quick_run_wizard" model="ir.actions.act_window">
+            <field name="name">Instant Batch Launcher</field>
+            <field name="res_model">factory.quick.run.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

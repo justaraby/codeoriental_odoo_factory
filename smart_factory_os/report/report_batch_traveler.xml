@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_batch_traveler_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-family: sans-serif; color: #1e293b;">
+                            <!-- Header / Barcode Row -->
+                            <div class="row align-items-center mb-4 pb-2 border-bottom">
+                                <div class="col-8">
+                                    <h2 class="fw-bold mb-1" style="color: #0f172a;">
+                                        PRODUCTION BATCH TRAVELER / JOB CARD
+                                    </h2>
+                                    <h5 class="text-primary mb-0">
+                                        Batch Ref: <span t-field="doc.factory_batch_code"/> (<span t-field="doc.name"/>)
+                                    </h5>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div t-field="doc.name" t-options="{'widget': 'barcode', 'width': 500, 'height': 80, 'img_style': 'width:200px;height:45px;'}"/>
+                                    <span class="small text-muted d-block" t-field="doc.name"/>
+                                </div>
+                            </div>
+
+                            <!-- Meta Details Box -->
+                            <div class="card p-3 mb-4 bg-light border-0" style="border-radius: 8px;">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Finished Product:</strong> <span t-field="doc.product_id.display_name"/></p>
+                                        <p class="mb-1"><strong>Planned Output:</strong> <span t-field="doc.product_qty"/> <span t-field="doc.product_uom_id.name"/></p>
+                                        <p class="mb-1"><strong>Target Shift:</strong> <span t-field="doc.factory_shift_id.name"/></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Scheduled Start:</strong> <span t-field="doc.date_start"/></p>
+                                        <p class="mb-1"><strong>Floor Supervisor:</strong> <span t-field="doc.factory_supervisor_id.name"/></p>
+                                        <p class="mb-1"><strong>Assigned Machinery:</strong> <span t-esc="', '.join(doc.factory_machine_ids.mapped('name')) or 'Standard Production Line'"/></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Raw Materials Bill -->
+                            <h5 class="fw-bold text-dark mb-2">Raw Material Requisition Checklist</h5>
+                            <table class="table table-sm table-bordered mb-4">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Component / Raw Material</th>
+                                        <th class="text-center">Required Qty</th>
+                                        <th class="text-center">UoM</th>
+                                        <th class="text-center">Picked By (Initials)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.move_raw_ids" t-as="move">
+                                        <td><span t-field="move.product_id.display_name"/></td>
+                                        <td class="text-center"><span t-field="move.product_uom_qty"/></td>
+                                        <td class="text-center"><span t-field="move.product_uom.name"/></td>
+                                        <td class="text-center" style="width: 150px;">[ &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Routing Stages / Work Orders -->
+                            <h5 class="fw-bold text-dark mb-2">Production Operations Checkpoints</h5>
+                            <table class="table table-sm table-bordered mb-4">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Sequence</th>
+                                        <th>Operation / Line Station</th>
+                                        <th>Work Center</th>
+                                        <th class="text-center">Start Time</th>
+                                        <th class="text-center">Finish Time</th>
+                                        <th class="text-center">Operator Sign</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.workorder_ids" t-as="wo">
+                                        <td class="text-center"><span t-field="wo.sequence"/></td>
+                                        <td><strong><span t-field="wo.name"/></strong></td>
+                                        <td><span t-field="wo.workcenter_id.name"/></td>
+                                        <td class="text-center" style="width: 100px;">___ : ___</td>
+                                        <td class="text-center" style="width: 100px;">___ : ___</td>
+                                        <td class="text-center" style="width: 130px;">___________</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Signatures Box -->
+                            <div class="row mt-5 pt-4 border-top">
+                                <div class="col-4 text-center">
+                                    <p class="mb-5"><strong>Machine Operator Signature</strong></p>
+                                    <p class="border-top mx-4 pt-1 small text-muted">Date &amp; Sign</p>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <p class="mb-5"><strong>Shift Supervisor Sign-off</strong></p>
+                                    <p class="border-top mx-4 pt-1 small text-muted">Approved Output Count</p>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <p class="mb-5"><strong>Quality Assurance (QC) Seal</strong></p>
+                                    <p class="border-top mx-4 pt-1 small text-muted">
+                                        <t t-if="doc.qc_passed">PASSED [✓]</t>
+                                        <t t-else="">Inspection Stamp</t>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
