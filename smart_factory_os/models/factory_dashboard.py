@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of CodeOriental Smart Factory OS. See LICENSE file for full copyright and licensing details.
+# Part of Smart Factory OS by Muhammed Ezzat Hosni Hussen. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
 
