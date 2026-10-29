@@ -15,7 +15,7 @@
                     <field name="hourly_cost"/>
                     <field name="total_downtime_hours"/>
                     <templates>
-                        <t t-name="kanban-box">
+                        <t t-name="card">
                             <div t-attf-class="oe_kanban_global_click p-3 rounded shadow-sm border #{record.state.raw_value == 'running' ? 'border-success' : (record.state.raw_value == 'breakdown' ? 'border-danger' : 'border-warning')}" style="border-width: 2px !important;">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <strong class="fs-6 text-dark"><field name="name"/></strong>
@@ -95,7 +95,7 @@
                         <notebook>
                             <page string="Downtime &amp; Maintenance Logs" name="downtime_logs">
                                 <field name="downtime_ids">
-                                    <tree decoration-danger="state == 'open'" decoration-success="state == 'resolved'">
+                                    <list decoration-danger="state == 'open'" decoration-success="state == 'resolved'">
                                         <field name="name"/>
                                         <field name="reason"/>
                                         <field name="start_time"/>
@@ -103,7 +103,7 @@
                                         <field name="duration_hours"/>
                                         <field name="cost_impact" widget="monetary"/>
                                         <field name="state" widget="badge"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
                             <page string="Technical Notes" name="notes">
@@ -120,12 +120,12 @@
             </field>
         </record>
 
-        <!-- Machine Tree View -->
+        <!-- Machine List View -->
         <record id="view_factory_machine_tree" model="ir.ui.view">
-            <field name="name">factory.machine.tree</field>
+            <field name="name">factory.machine.list</field>
             <field name="model">factory.machine</field>
             <field name="arch" type="xml">
-                <tree string="Factory Machinery" decoration-danger="state == 'breakdown'" decoration-warning="state == 'idle'" decoration-success="state == 'running'">
+                <list string="Factory Machinery" decoration-danger="state == 'breakdown'" decoration-warning="state == 'idle'" decoration-success="state == 'running'">
                     <field name="code"/>
                     <field name="name"/>
                     <field name="workcenter_id"/>
@@ -133,7 +133,7 @@
                     <field name="hourly_cost" widget="monetary"/>
                     <field name="total_downtime_hours"/>
                     <field name="next_maintenance_date"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -141,15 +141,15 @@
         <record id="action_factory_machine" model="ir.actions.act_window">
             <field name="name">Machines &amp; Shop Floor Equipment</field>
             <field name="res_model">factory.machine</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,list,form</field>
         </record>
 
-        <!-- Downtime Incident Tree View -->
+        <!-- Downtime Incident List View -->
         <record id="view_factory_machine_downtime_tree" model="ir.ui.view">
-            <field name="name">factory.machine.downtime.tree</field>
+            <field name="name">factory.machine.downtime.list</field>
             <field name="model">factory.machine.downtime</field>
             <field name="arch" type="xml">
-                <tree string="Downtime Incidents" decoration-danger="state == 'open'" decoration-success="state == 'resolved'">
+                <list string="Downtime Incidents" decoration-danger="state == 'open'" decoration-success="state == 'resolved'">
                     <field name="name"/>
                     <field name="machine_id"/>
                     <field name="workcenter_id"/>
@@ -159,7 +159,7 @@
                     <field name="duration_hours"/>
                     <field name="cost_impact" widget="monetary"/>
                     <field name="state" widget="badge"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -206,7 +206,7 @@
         <record id="action_factory_machine_downtime" model="ir.actions.act_window">
             <field name="name">Machine Breakdown Log</field>
             <field name="res_model">factory.machine.downtime</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
     </data>
 </odoo>

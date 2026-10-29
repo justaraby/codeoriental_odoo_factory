@@ -98,16 +98,16 @@
                                     </h5>
                                     <div class="d-grid gap-2">
                                         <button name="action_open_quick_run_wizard" type="object" class="btn btn-outline-primary text-start p-2">
-                                            <i class="fa fa-play-circle me-2"></i> <strong>Launch New Batch</strong> - Schedule production order in 10 seconds
+                                            <i class="fa fa-play-circle me-2" title="Launch Batch"></i> <strong>Launch New Batch</strong> - Schedule production order in 10 seconds
                                         </button>
-                                        <button name="%(action_factory_material_requisition)d" type="action" class="btn btn-outline-secondary text-start p-2">
-                                            <i class="fa fa-clipboard me-2"></i> <strong>Material Requisition Slip</strong> - Issue raw materials to shop floor
+                                        <button name="action_open_material_requisitions" type="object" class="btn btn-outline-secondary text-start p-2">
+                                            <i class="fa fa-clipboard me-2" title="Requisitions"></i> <strong>Material Requisition Slip</strong> - Issue raw materials to shop floor
                                         </button>
-                                        <button name="%(action_factory_machine_downtime)d" type="action" class="btn btn-outline-danger text-start p-2">
-                                            <i class="fa fa-wrench me-2"></i> <strong>Report Machine Breakdown</strong> - Trigger maintenance alert
+                                        <button name="action_open_downtimes" type="object" class="btn btn-outline-danger text-start p-2">
+                                            <i class="fa fa-wrench me-2" title="Report Breakdown"></i> <strong>Report Machine Breakdown</strong> - Trigger maintenance alert
                                         </button>
-                                        <button name="%(action_factory_cost_analysis)d" type="action" class="btn btn-outline-success text-start p-2">
-                                            <i class="fa fa-line-chart me-2"></i> <strong>Batch Cost &amp; Profit Analysis</strong> - View margins across products
+                                        <button name="action_open_cost_analysis" type="object" class="btn btn-outline-success text-start p-2">
+                                            <i class="fa fa-line-chart me-2" title="Cost Analysis"></i> <strong>Batch Cost &amp; Profit Analysis</strong> - View margins across products
                                         </button>
                                     </div>
                                 </div>

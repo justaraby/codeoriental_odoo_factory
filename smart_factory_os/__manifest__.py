@@ -3,7 +3,7 @@
 
 {
     'name': 'Smart Factory Operating System | Turnkey Factory ERP & Shopfloor Hub',
-    'version': '17.0.1.0.0',
+    'version': '18.0.1.0.0',
     'category': 'Manufacturing/Manufacturing',
     'summary': 'Turnkey factory management without hiring an Odoo consultant: 1-Click Interactive Onboarding, Plant Command Center, Simplified Shopfloor Kiosk, 4-Pillar Batch Costing & Machine Downtime Log.',
     'description': """
@@ -52,13 +52,13 @@ Compatibility:
         'wizard/factory_quick_run_wizard_views.xml',
         'wizard/factory_downtime_wizard_views.xml',
         # Views
-        'views/factory_dashboard_views.xml',
         'views/factory_production_views.xml',
         'views/factory_machine_views.xml',
         'views/factory_shift_views.xml',
         'views/factory_material_requisition_views.xml',
         'views/factory_cost_analysis_views.xml',
         'views/factory_industry_template_views.xml',
+        'views/factory_dashboard_views.xml',
         'views/factory_menus.xml',
         # Reports
         'report/factory_reports.xml',

@@ -97,7 +97,7 @@ class FactoryMachine(models.Model):
             'name': _('Downtime History - %s') % self.name,
             'type': 'ir.actions.act_window',
             'res_model': 'factory.machine.downtime',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('machine_id', '=', self.id)],
             'context': {'default_machine_id': self.id},
         }

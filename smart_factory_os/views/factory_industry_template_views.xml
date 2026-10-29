@@ -15,7 +15,7 @@
                     <field name="default_overhead_rate"/>
                     <field name="workcenter_count"/>
                     <templates>
-                        <t t-name="kanban-box">
+                        <t t-name="card">
                             <div class="oe_kanban_global_click p-3 rounded shadow-sm border">
                                 <div class="d-flex align-items-center mb-2">
                                     <div class="me-2 text-primary" style="font-size: 1.5rem;">
@@ -65,7 +65,7 @@
                         <notebook>
                             <page string="Pre-configured Work Centers &amp; Lines" name="preset_lines">
                                 <field name="line_ids">
-                                    <tree editable="bottom">
+                                    <list editable="bottom">
                                         <field name="sequence" widget="handle"/>
                                         <field name="code"/>
                                         <field name="name"/>
@@ -74,7 +74,7 @@
                                         <field name="time_efficiency"/>
                                         <field name="requires_maintenance" widget="boolean_toggle"/>
                                         <field name="default_notes"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
@@ -83,12 +83,12 @@
             </field>
         </record>
 
-        <!-- Industry Template Tree View -->
+        <!-- Industry Template List View -->
         <record id="view_factory_industry_template_tree" model="ir.ui.view">
-            <field name="name">factory.industry.template.tree</field>
+            <field name="name">factory.industry.template.list</field>
             <field name="model">factory.industry.template</field>
             <field name="arch" type="xml">
-                <tree string="Industry Profiles">
+                <list string="Industry Profiles">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                     <field name="code"/>
@@ -96,7 +96,7 @@
                     <field name="default_overhead_rate"/>
                     <field name="default_scrap_tolerance"/>
                     <field name="shift_system"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -104,7 +104,7 @@
         <record id="action_factory_industry_template" model="ir.actions.act_window">
             <field name="name">Industry Factory Profiles</field>
             <field name="res_model">factory.industry.template</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,list,form</field>
         </record>
     </data>
 </odoo>

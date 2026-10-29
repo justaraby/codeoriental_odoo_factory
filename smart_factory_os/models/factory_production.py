@@ -10,7 +10,7 @@ class MrpProduction(models.Model):
     factory_batch_code = fields.Char(
         string='Batch Tracking Code',
         copy=False,
-        default=lambda self: self.env['ir.sequence'].next_by_code('factory.batch.code') or _('BATCH-%s') % fields.Date.today()
+        default=lambda self: self.env['ir.sequence'].next_by_code('factory.batch.code') or f"BATCH-{fields.Date.today()}"
     )
     factory_shift_id = fields.Many2one(
         'factory.shift',
@@ -199,7 +199,7 @@ class MrpProduction(models.Model):
             'name': _('Material Requisitions - %s') % self.name,
             'type': 'ir.actions.act_window',
             'res_model': 'factory.material.requisition',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('production_id', '=', self.id)],
             'context': {
                 'default_production_id': self.id,

@@ -89,7 +89,7 @@ class FactoryDashboard(models.Model):
             'name': _('Active Manufacturing Batches'),
             'type': 'ir.actions.act_window',
             'res_model': 'mrp.production',
-            'view_mode': 'tree,form,calendar',
+            'view_mode': 'list,form,calendar',
             'domain': [('state', 'in', ['confirmed', 'progress', 'to_close'])],
         }
 
@@ -98,7 +98,7 @@ class FactoryDashboard(models.Model):
             'name': _('Factory Machinery & Asset Status'),
             'type': 'ir.actions.act_window',
             'res_model': 'factory.machine',
-            'view_mode': 'kanban,tree,form',
+            'view_mode': 'kanban,list,form',
         }
 
     def action_open_shortages(self):
@@ -106,8 +106,32 @@ class FactoryDashboard(models.Model):
             'name': _('Raw Material Shortages'),
             'type': 'ir.actions.act_window',
             'res_model': 'factory.material.requisition',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('has_shortage', '=', True)],
+        }
+
+    def action_open_material_requisitions(self):
+        return {
+            'name': _('Material Requisitions'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'factory.material.requisition',
+            'view_mode': 'list,form',
+        }
+
+    def action_open_downtimes(self):
+        return {
+            'name': _('Machine Breakdown Log'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'factory.machine.downtime',
+            'view_mode': 'list,form',
+        }
+
+    def action_open_cost_analysis(self):
+        return {
+            'name': _('Batch Cost & Profitability Analysis'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'factory.cost.analysis',
+            'view_mode': 'list,pivot,graph',
         }
 
     def action_open_onboarding_wizard(self):

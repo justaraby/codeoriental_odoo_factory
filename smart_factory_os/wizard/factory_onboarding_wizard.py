@@ -150,7 +150,7 @@ class FactoryOnboardingWizard(models.TransientModel):
             raw_1 = self.env['product.product'].create({
                 'name': _('Raw Material A - Primary Grade'),
                 'categ_id': cat_raw.id,
-                'type': 'product',
+                'is_storable': True,
                 'uom_id': uom_kg.id,
                 'uom_po_id': uom_kg.id,
                 'standard_price': 4.50,
@@ -158,7 +158,7 @@ class FactoryOnboardingWizard(models.TransientModel):
             raw_2 = self.env['product.product'].create({
                 'name': _('Packaging & Label Material'),
                 'categ_id': cat_raw.id,
-                'type': 'product',
+                'is_storable': True,
                 'uom_id': uom_unit.id,
                 'uom_po_id': uom_unit.id,
                 'standard_price': 0.85,
@@ -168,7 +168,7 @@ class FactoryOnboardingWizard(models.TransientModel):
             finished_prod = self.env['product.product'].create({
                 'name': self.sample_product_name or _('Factory Finished Good'),
                 'categ_id': cat_fg.id,
-                'type': 'product',
+                'is_storable': True,
                 'uom_id': uom_unit.id,
                 'uom_po_id': uom_unit.id,
                 'list_price': 25.00,

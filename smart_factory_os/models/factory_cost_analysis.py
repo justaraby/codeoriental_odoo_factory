@@ -59,14 +59,15 @@ class FactoryCostAnalysis(models.Model):
                     COALESCE(mp.cost_factory_overhead, 0.0) AS cost_factory_overhead,
                     COALESCE(mp.cost_total_batch, 0.0) AS cost_total_batch,
                     COALESCE(mp.cost_per_unit, 0.0) AS cost_per_unit,
-                    (COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pp.list_price, 0.0)) AS actual_revenue,
-                    ((COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pp.list_price, 0.0)) - COALESCE(mp.cost_total_batch, 0.0)) AS gross_profit,
+                    (COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pt.list_price, 0.0)) AS actual_revenue,
+                    ((COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pt.list_price, 0.0)) - COALESCE(mp.cost_total_batch, 0.0)) AS gross_profit,
                     CASE 
-                        WHEN (COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pp.list_price, 0.0)) > 0 
-                        THEN ROUND(((((COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pp.list_price, 0.0)) - COALESCE(mp.cost_total_batch, 0.0)) / (COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pp.list_price, 0.0))) * 100)::numeric, 1)
+                        WHEN (COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pt.list_price, 0.0)) > 0 
+                        THEN ROUND(((((COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pt.list_price, 0.0)) - COALESCE(mp.cost_total_batch, 0.0)) / (COALESCE(mp.qty_producing, mp.product_qty) * COALESCE(pt.list_price, 0.0))) * 100)::numeric, 1)
                         ELSE 0.0
                     END AS margin_pct
                 FROM mrp_production mp
                 JOIN product_product pp ON mp.product_id = pp.id
+                JOIN product_template pt ON pp.product_tmpl_id = pt.id
             )
         """ % self._table)

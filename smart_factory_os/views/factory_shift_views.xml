@@ -29,12 +29,12 @@
                         <notebook>
                             <page string="Assigned Operators / Workers" name="operators">
                                 <field name="worker_ids">
-                                    <tree>
+                                    <list>
                                         <field name="name"/>
                                         <field name="job_title"/>
                                         <field name="work_phone"/>
                                         <field name="work_email"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
@@ -43,12 +43,12 @@
             </field>
         </record>
 
-        <!-- Shift Schedule Tree View -->
+        <!-- Shift Schedule List View -->
         <record id="view_factory_shift_tree" model="ir.ui.view">
-            <field name="name">factory.shift.tree</field>
+            <field name="name">factory.shift.list</field>
             <field name="model">factory.shift</field>
             <field name="arch" type="xml">
-                <tree string="Factory Shifts">
+                <list string="Factory Shifts">
                     <field name="sequence" widget="handle"/>
                     <field name="code"/>
                     <field name="name"/>
@@ -57,7 +57,7 @@
                     <field name="duration_hours"/>
                     <field name="supervisor_id"/>
                     <field name="worker_count"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -65,7 +65,7 @@
         <record id="action_factory_shift" model="ir.actions.act_window">
             <field name="name">Shift Schedules</field>
             <field name="res_model">factory.shift</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
 
         <!-- Shift Log Form View -->
@@ -113,12 +113,12 @@
             </field>
         </record>
 
-        <!-- Shift Log Tree View -->
+        <!-- Shift Log List View -->
         <record id="view_factory_shift_log_tree" model="ir.ui.view">
-            <field name="name">factory.shift.log.tree</field>
+            <field name="name">factory.shift.log.list</field>
             <field name="model">factory.shift.log</field>
             <field name="arch" type="xml">
-                <tree string="Daily Shift Logs" decoration-info="state == 'draft'" decoration-success="state == 'approved'">
+                <list string="Daily Shift Logs" decoration-info="state == 'draft'" decoration-success="state == 'approved'">
                     <field name="log_date"/>
                     <field name="shift_id"/>
                     <field name="supervisor_id"/>
@@ -127,7 +127,7 @@
                     <field name="scrap_rate" widget="badge" decoration-danger="scrap_rate &gt; 3.0" decoration-success="scrap_rate &lt;= 3.0"/>
                     <field name="downtime_minutes"/>
                     <field name="state" widget="badge"/>
-                </tree>
+                </list>
             </field>
         </record>
 
@@ -135,7 +135,7 @@
         <record id="action_factory_shift_log" model="ir.actions.act_window">
             <field name="name">Daily Shift Logs &amp; Handover</field>
             <field name="res_model">factory.shift.log</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
     </data>
 </odoo>

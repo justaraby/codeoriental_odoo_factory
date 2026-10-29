@@ -151,7 +151,7 @@ class FactoryMaterialRequisitionLine(models.Model):
 
     qty_available = fields.Float(string='Stock on Hand', compute='_compute_stock_levels')
     shortage_qty = fields.Float(string='Deficit Qty', compute='_compute_stock_levels')
-    is_shortage = fields.Boolean(string='Shortage Flag', compute='_compute_stock_levels', store=True)
+    is_shortage = fields.Boolean(string='Shortage Flag', compute='_compute_is_shortage', store=True)
 
     @api.depends('product_id', 'quantity')
     def _compute_stock_levels(self):
@@ -160,8 +160,14 @@ class FactoryMaterialRequisitionLine(models.Model):
                 rec.qty_available = rec.product_id.qty_available
                 deficit = rec.quantity - rec.qty_available
                 rec.shortage_qty = deficit if deficit > 0 else 0.0
-                rec.is_shortage = deficit > 0
             else:
                 rec.qty_available = 0.0
                 rec.shortage_qty = 0.0
+
+    @api.depends('product_id', 'quantity')
+    def _compute_is_shortage(self):
+        for rec in self:
+            if rec.product_id:
+                rec.is_shortage = rec.quantity > rec.product_id.qty_available
+            else:
                 rec.is_shortage = False
